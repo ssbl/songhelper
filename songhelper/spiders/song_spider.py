@@ -1,5 +1,5 @@
 # Basic song finder
-# Finds songs by artist similar to your favorite artist
+# Finds songs by artists similar to your favorite artist
 
 from scrapy import log
 from scrapy.http import Request
