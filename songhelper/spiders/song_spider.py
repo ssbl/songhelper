@@ -8,7 +8,7 @@ class SongSpider(CrawlSpider):
     name = 'songhelper'
     home = 'http://www.last.fm'
 
-    def __init__(self, artist=None, *args, **kwargs):
+    def __init__(self, artist='', *args, **kwargs):
         super(SongSpider, self).__init__(*args, **kwargs)
         self.start_urls = [
             'http://www.last.fm/search?q=%s' % artist
