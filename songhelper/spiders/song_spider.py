@@ -19,13 +19,14 @@ class SongSpider(CrawlSpider):
 
         # choose first link (top result)
         try:
-            artist_link = str(self.home + sel.xpath('//h3/a/@href').extract()[0])
+            select_a = sel.xpath('//a[@class="link-block-target"]').extract()[0]
+            artist_link = str(self.home + select_a)
         except IndexError:
             self.log('Could not match any items.',
                      level=log.ERROR)
             return
         
-        artist_name = str(sel.xpath('//h3/a/text()').extract()[0])
+        artist_name = str(sel.xpath('//a[@class="link-block-target"]/text()').extract()[0])
 
         if ' - ' in artist_name:
             self.log('Found song: ' + artist_name)
@@ -34,15 +35,15 @@ class SongSpider(CrawlSpider):
             self.log('Found artist: ' + artist_name)
             artist_link += '/+similar'
             return Request(url=artist_link, callback=self.get_artists)
-            
+
     def get_artists(self, response):
         self.log('Finding similar artists...')
 
         sel = Selector(response)
-        artists = sel.xpath('//a[@class="link-reference"]/@href').extract()[:5]
+        artists = sel.xpath('//a[@class="link-block-target"]/@href').extract()[:5]
 
         # Top 5 similar artists
-        names = sel.xpath('//a/h3/text()').extract()[:5]
+        names = sel.xpath('//a[@class="link-block-target"]/text()').extract()[:5]
         
         for artist in artists:
             artist_link = self.home + artist
