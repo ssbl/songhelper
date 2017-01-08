@@ -25,7 +25,7 @@ class SongSpider(CrawlSpider):
             self.log('Could not match any items.',
                      level=log.ERROR)
             return
-        
+
         artist_name = str(sel.xpath('//a[@class="link-block-target"]/text()').extract()[0])
 
         if ' - ' in artist_name:
@@ -44,7 +44,7 @@ class SongSpider(CrawlSpider):
 
         # Top 5 similar artists
         names = sel.xpath('//a[@class="link-block-target"]/text()').extract()[:5]
-        
+
         for artist in artists:
             artist_link = self.home + artist
             yield Request(artist_link, callback=self.get_songs)
@@ -67,4 +67,3 @@ class SongSpider(CrawlSpider):
 
             items.append(item)
         return items
-            
