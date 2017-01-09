@@ -19,14 +19,14 @@ class SongSpider(CrawlSpider):
 
         # choose first link (top result)
         try:
-            select_a = sel.xpath('//a[@class="link-block-target"]').extract()[0]
-            artist_link = str(self.home + select_a)
+            select_a = sel.xpath('//a[@class="link-block-target"]/@href').extract()[0]
+            artist_link = self.home + select_a
         except IndexError:
             self.log('Could not match any items.',
                      level=log.ERROR)
             return
 
-        artist_name = str(sel.xpath('//a[@class="link-block-target"]/text()').extract()[0])
+        artist_name = sel.xpath('//a[@class="link-block-target"]/text()').extract()[0]
 
         if ' - ' in artist_name:
             self.log('Found song: ' + artist_name)
@@ -53,10 +53,9 @@ class SongSpider(CrawlSpider):
         sel = Selector(response)
 
         items = []
-        artist = sel.xpath('//h1[@itemprop]/text()').extract()[0].strip()
-        links = sel.xpath('//div/meta[@itemprop="url"]/@content').extract()
-        names = sel.xpath('//div/a[@href]/span[@itemprop="name"]/text()').extract()
-        albums = sel.xpath('//div/meta[@itemprop="inAlbum"]/@content').extract()
+        artist = sel.xpath('//h1[@class="header-title"]/text()').extract()[0].strip()
+        links = sel.xpath('//a[@class="chartlist-play-button js-playlink"]/@href').extract()
+        names = sel.xpath('//span[@class="chartlist-ellipsis-wrap"]/a/@title').extract()
 
         for song in zip(names, albums, links):
             item = SongItem()
