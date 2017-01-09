@@ -57,12 +57,11 @@ class SongSpider(CrawlSpider):
         links = sel.xpath('//a[@class="chartlist-play-button js-playlink"]/@href').extract()
         names = sel.xpath('//span[@class="chartlist-ellipsis-wrap"]/a/@title').extract()
 
-        for song in zip(names, albums, links):
+        for name,link in zip(names, links):
             item = SongItem()
             item['artist'] = artist
-            item['name'] = song[0]
-            item['album'] = song[1]
-            item['link'] = song[2]
+            item['name'] = name
+            item['link'] = link
 
             items.append(item)
         return items
