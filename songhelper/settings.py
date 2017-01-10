@@ -7,13 +7,9 @@
 #
 
 BOT_NAME = 'songhelper'
-BOT_VERSION = '1.0'
 
 SPIDER_MODULES = ['songhelper.spiders']
 NEWSPIDER_MODULE = 'songhelper.spiders'
 DOWNLOAD_DELAY = 1
 #LOG_LEVEL = 'INFO'
 COOKIES_ENABLED = False
-USER_AGENT = '%s%s' % (BOT_NAME, BOT_VERSION)
-
-
