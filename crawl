@@ -1,0 +1,4 @@
+#!/bin/bash
+
+ARTIST="'$@'"
+scrapy crawl songhelper -a artist="$ARTIST"
